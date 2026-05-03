@@ -20,6 +20,9 @@
 # production
 /build
 
+/context
+/feature-specs
+
 # misc
 .DS_Store
 *.pem
