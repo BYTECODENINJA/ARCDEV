@@ -20,19 +20,18 @@ export const metadata: Metadata = {
 };
 
 const clerkAppearance = {
-  theme: dark,
+  baseTheme: dark,
   variables: {
-    colorBackground: "var(--bg-surface)",
-    colorForeground: "var(--bg-elevated)",
-    colorPrimary: "var(--accent-primary)",
-    colorText: "var(--text-primary)",
-    colorTextSecondary: "var(--text-secondary)",
-    colorNeutral: "var(--text-muted)",
-    colorInputBackground: "var(--bg-base)",
-    colorInputText: "var(--text-primary)",
-    colorBorder: "var(--border-default)",
-    borderRadius: "var(--radius-md)",
-    fontFamily: "var(--font-geist-sans)",
+    colorBackground: "#111114",
+    colorForeground: "#18181c",
+    colorPrimary: "#00c8d4",
+    colorText: "#f0f0f4",
+    colorTextSecondary: "#c0c0cc",
+    colorNeutral: "#808090",
+    colorInputBackground: "#080809",
+    colorInputText: "#f0f0f4",
+    colorBorder: "#2a2a30",
+    borderRadius: "0.75rem",
   },
 };
 

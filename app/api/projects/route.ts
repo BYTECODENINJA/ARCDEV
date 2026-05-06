@@ -57,7 +57,8 @@ export async function POST(request: Request) {
 
   const project = await createProjectForOwner(
     userId,
-    normalizeProjectName(body.name)
+    normalizeProjectName(body.name),
+    typeof body.projectId === "string" ? body.projectId : undefined
   )
 
   return Response.json({ project }, { status: 201 })

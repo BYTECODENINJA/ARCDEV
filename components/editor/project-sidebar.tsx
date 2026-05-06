@@ -18,16 +18,16 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
-import type { ProjectRecord } from "@/hooks/use-project-dialogs"
+import type { ProjectSummary } from "@/lib/projects"
 
 type ProjectSidebarProps = {
   isOpen: boolean
   onClose: () => void
-  ownedProjects: ProjectRecord[]
-  sharedProjects: ProjectRecord[]
+  ownedProjects: ProjectSummary[]
+  sharedProjects: ProjectSummary[]
   onNewProject: () => void
-  onRenameProject: (project: ProjectRecord) => void
-  onDeleteProject: (project: ProjectRecord) => void
+  onRenameProject: (project: ProjectSummary) => void
+  onDeleteProject: (project: ProjectSummary) => void
   className?: string
 }
 
@@ -61,12 +61,12 @@ function ProjectList({
   onRenameProject,
   onDeleteProject,
 }: {
-  projects: ProjectRecord[]
+  projects: ProjectSummary[]
   emptyIcon: LucideIcon
   emptyTitle: string
   emptyDescription: string
-  onRenameProject?: (project: ProjectRecord) => void
-  onDeleteProject?: (project: ProjectRecord) => void
+  onRenameProject?: (project: ProjectSummary) => void
+  onDeleteProject?: (project: ProjectSummary) => void
 }) {
   if (projects.length === 0) {
     return (
@@ -89,9 +89,11 @@ function ProjectList({
             <p className="truncate text-sm font-medium text-copy-primary">
               {project.name}
             </p>
-            <p className="truncate text-xs text-copy-muted">/{project.slug}</p>
+            <p className="truncate text-xs text-copy-muted">
+              {project.id.slice(0, 8)}
+            </p>
           </div>
-          {project.owner && onRenameProject && onDeleteProject ? (
+          {onRenameProject && onDeleteProject ? (
             <div className="flex items-center gap-1">
               <Button
                 type="button"
@@ -167,7 +169,7 @@ export function ProjectSidebar({
 
         <Tabs defaultValue="my-projects" className="min-h-0 flex-1 gap-0">
           <div className="shrink-0 border-b border-surface-border px-4 py-3">
-            <TabsList className="grid h-9 w-full grid-cols-2 bg-subtle p-1">
+            <TabsList className="grid h-9 w-full grid-cols-2 gap-2 bg-subtle p-1">
               <TabsTrigger value="my-projects">My Projects</TabsTrigger>
               <TabsTrigger value="shared">Shared</TabsTrigger>
             </TabsList>

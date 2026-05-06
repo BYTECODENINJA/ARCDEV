@@ -75,7 +75,7 @@ export function ProjectDialogs({
               </label>
               <div className="rounded-2xl border border-surface-border bg-surface px-3 py-2">
                 <p className="text-xs uppercase tracking-[0.18em] text-copy-faint">
-                  Slug preview
+                  Room ID preview
                 </p>
                 <p className="mt-1 font-mono text-sm text-copy-secondary">
                   {slugPreview}

@@ -1,4 +1,7 @@
+import "server-only"
+
 import { ProjectStatus, Prisma } from "@/app/generated/prisma/client"
+import { buildProjectId, isValidProjectId } from "@/lib/project-ids"
 import { prisma } from "@/lib/prisma"
 
 const projectSummarySelect = {
@@ -32,9 +35,32 @@ export async function listOwnedProjects(ownerId: string) {
   })
 }
 
-export async function createProjectForOwner(ownerId: string, name: string) {
+export async function listSharedProjects(collaboratorEmail: string) {
+  return prisma.project.findMany({
+    where: {
+      collaborators: {
+        some: {
+          collaboratorEmail: collaboratorEmail.toLowerCase(),
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+    select: projectSummarySelect,
+  })
+}
+
+export async function createProjectForOwner(
+  ownerId: string,
+  name: string,
+  projectId?: string
+) {
+  const id = isValidProjectId(projectId)
+    ? projectId
+    : buildProjectId(name)
+
   return prisma.project.create({
     data: {
+      id,
       ownerId,
       name,
       status: ProjectStatus.DRAFT,
