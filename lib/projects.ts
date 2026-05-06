@@ -49,6 +49,33 @@ export async function listSharedProjects(collaboratorEmail: string) {
   })
 }
 
+export async function findAccessibleProject(
+  projectId: string,
+  userId: string,
+  collaboratorEmail?: string
+) {
+  return prisma.project.findFirst({
+    where: {
+      id: projectId,
+      OR: [
+        { ownerId: userId },
+        ...(collaboratorEmail
+          ? [
+              {
+                collaborators: {
+                  some: {
+                    collaboratorEmail: collaboratorEmail.toLowerCase(),
+                  },
+                },
+              },
+            ]
+          : []),
+      ],
+    },
+    select: projectSummarySelect,
+  })
+}
+
 export async function createProjectForOwner(
   ownerId: string,
   name: string,
